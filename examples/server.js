@@ -4,8 +4,6 @@ var http = require('http'),
     // This is our React component, shared by server and browser thanks to browserify
     MyApp = require('./myApp');
 
-console.dir(MyApp);
-
 // Just create a plain old HTTP server that responds to two endpoints ('/' and
 // '/bundle.js') This would obviously work similarly with any higher level
 // library (Express, etc)
