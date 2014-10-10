@@ -1,0 +1,22 @@
+{
+    "name"         : "decaf-react-example",
+    "version"      : "0.0.1",
+    "authors"      : [
+        "Mike Schwartz <mike@moduscreate.com>"
+    ],
+    "description"  : "Test app for decaf-react",
+    "main"         : "example.js",
+    "keywords"     : [
+        "react",
+        "rhino",
+        "JavaScript",
+        "Sync"
+    ],
+    "license"      : "MIT",
+    "homepage"     : "http://moduscreate.com",
+    "private"      : "true",
+    "dependencies" : {
+        "decaf"              : "git://github.com/decafjs/decaf#master",
+        "decaf-react"        : "git://github.com/decafjs/decaf-react#master"
+    }
+}
