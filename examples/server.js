@@ -1,7 +1,8 @@
 var http = require('http'),
+    File = require('File'),
     React = require('react'),
     // This is our React component, shared by server and browser thanks to browserify
-    MyApp = require('./myApp')
+    MyApp = require('./myApp');
 
 console.dir(MyApp);
 
@@ -9,7 +10,6 @@ console.dir(MyApp);
 // '/bundle.js') This would obviously work similarly with any higher level
 // library (Express, etc)
 http.createServer(function(req, res) {
-debugger
   // If we hit the homepage, then we want to serve up some HTML - including the
   // server-side rendered React component(s), as well as the script tags
   // pointing to the client-side code
@@ -65,6 +65,12 @@ debugger
 
   // This endpoint is hit when the browser is requesting bundle.js from the page above
   } else if (req.uri == '/bundle.js') {
+    var bundle = new File('bower_components/decaf-jolt-require/require.js').readAll();
+    var    content = require.getContent('./myApp').content;
+    bundle += "require.register('react', 'module.exports = window.React;');";
+    bundle += "require.register('./myApp.js', ";
+    bundle += JSON.stringify(content)
+    bundle += ');'
 
     res.writeHead(200, { 'Content-Type' : 'text/javascript'})
 
@@ -75,10 +81,7 @@ debugger
     // We also use literalify to transform our `require` statements for React
     // so that it uses the global variable (from the CDN JS file) instead of
     // bundling it up with everything else
-    res.end([
-      'var myApp_js = ' + MyApp.toString(),
-      'function require() { return myApp_js; }'
-    ].join('\n'));
+    res.end(bundle);
     // browserify()
     //   .transform(literalify.configure({react: 'window.React'}))
     //   .require('./myApp.js')

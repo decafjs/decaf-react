@@ -17,6 +17,7 @@
     "private"      : "true",
     "dependencies" : {
         "decaf"              : "git://github.com/decafjs/decaf#master",
+        "decaf-jolt-require" : "git://github.com/decafjs/decaf-jolt-require#master",
         "decaf-react"        : "git://github.com/decafjs/decaf-react#master"
     }
 }

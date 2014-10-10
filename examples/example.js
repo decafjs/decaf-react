@@ -1,3 +1,4 @@
+/*global require */
 require("decaf-react");
 
 // console.log(require('test.jsx').toString());
