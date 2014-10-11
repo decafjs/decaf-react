@@ -19,12 +19,12 @@ http.createServer(function (req, res) {
         // here (with some potentially dangerous values for testing), but you could
         // imagine this would be objects typically fetched async from a DB,
         // filesystem or API, depending on the logged-in user, etc.
-        var props = {items: [0, 1, '</script>', '<!--inject!-->']}
+        var props = {items: [0, 1, '</script>', '<!--inject!-->']};
 
         // Now that we've got our data, we can perform the server-side rendering by
         // passing it in as `props` to our React component - and returning an HTML
         // string to be sent to the browser
-        var myAppHtml = React.renderComponentToString(MyApp(props))
+        var myAppHtml = React.renderComponentToString(MyApp(props));
 
         res.writeHead(200, {'Content-Type': 'text/html'});
 
@@ -59,30 +59,22 @@ http.createServer(function (req, res) {
             'var MyApp = require("./myApp.js"), container = document.getElementById("content"); ' +
             'React.renderComponent(MyApp(' + safeStringify(props) + '), container)' +
             '</script>'
-        )
+        );
 
         // This endpoint is hit when the browser is requesting bundle.js from the page above
-    } else if (req.uri == '/bundle.js') {
-        var Bundler = require('decaf-jolt-require').Bundler;
-
-        //var bundle = new File('bower_components/decaf-jolt-require/require.js').readAll();
-        //var content = require.getContent('./myApp').content;
-        //bundle += '__require__();\n';
-        //bundle += "require.register('react', 'module.exports = window.React;');\n";
-        //bundle += "require.register('./myApp.js', ";
-        //bundle += JSON.stringify(content)
-        //bundle += ');\n';
+    }
+    else if (req.uri == '/bundle.js') {
+        var Bundler = require('decaf-bundler').Bundler;
 
         res.writeHead(200, {'Content-Type': 'text/javascript'})
 
-        // Here we invoke browserify to package up our component.
+        // Here we invoke bundler to package up our component.
         // DON'T do it on the fly like this in production - it's very costly -
         // either compile the bundle ahead of time, or use some smarter middleware
         // (eg browserify-middleware).
         // We also use literalify to transform our `require` statements for React
         // so that it uses the global variable (from the CDN JS file) instead of
         // bundling it up with everything else
-        debugger;
         var bundler = new Bundler()
             .literal('react', 'window.React')
             .require('./myApp.js');
