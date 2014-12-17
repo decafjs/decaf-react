@@ -3,7 +3,6 @@ require("decaf-react");
 
 // console.log(require('test.jsx').toString());
 
-debugger
 var Application = require('./test').Application,
     render = require('./test').render;
 
